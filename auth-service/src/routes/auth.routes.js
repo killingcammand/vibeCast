@@ -9,7 +9,10 @@ import {
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const router=express.Router();
-
+router.get("/ping", (req, res) => {
+  console.log("PING HIT");
+  res.json({ message: "pong" });
+});
 router.post('/register',registerUserController);
 router.post('/login',loginUserController);
 router.post('/refresh-token',refreshTokenController);

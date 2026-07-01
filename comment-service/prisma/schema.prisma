@@ -1,0 +1,34 @@
+
+datasource db{
+    provider = "postgresql"  
+}
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+model Comment{
+     id    Int     @id @default(autoincrement())
+    videoID String
+    userID String
+    text String
+    timestamp DateTime @default(now())
+    parentID Int? // For nested comments
+
+    parent Comment? @relation("CommentReplies", fields: [parentID], references: [id])
+    replies Comment[] @relation("CommentReplies")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+model like{
+    id Int @id @default(autoincrement())
+    videoID String
+    userID String
+    targetID String
+    targetType String
+    
+    createdAt DateTime @default(now())
+
+    @@unique([videoID, userID, targetType, targetID]) // Ensure a user can like a specific target only once
+}
+

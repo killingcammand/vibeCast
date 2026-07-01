@@ -23,15 +23,22 @@ export const registerUserService=async (name,email,password)=>{
 };
 
 export const loginUserService=async (email,password)=>{
+      console.log("SERVICE 1");
     const existingUser=await User.findOne({email});
+        console.log("SERVICE 2", existingUser);
     if(!existingUser){
         throw new Error('Invalid email or password');
     }
+    console.log("SERVICE 3");
     const isPasswordValid=await bycrypt.compare(password,existingUser.password);
+    console.log("SERVICE 4");
+
     if(!isPasswordValid){
         throw new Error('Invalid email or password');
     }
+    console.log("SERVICE 5");
     const {accessToken,refreshToken}=generateToken(existingUser);
+    console.log("SERVICE 6", { accessToken, refreshToken });
     return {user:existingUser,tokens:{accessToken,refreshToken}};
 };
 

@@ -9,13 +9,28 @@ import cookieParser from 'cookie-parser';
 dotenv.config();
 
 const app=express();
-
+app.use((req, res, next) => {
+  console.log(
+    "AUTH SERVICE RECEIVED:",
+    req.method,
+    req.originalUrl
+  );
+  next();
+});
 app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
+    origin: "http://localhost:5173",
+    credentials: true
 }));
+
 app.use(express.json());
 app.use(cookieParser());
+
+app.use((req, res, next) => {
+  console.log("AUTH:", req.method, req.originalUrl);
+  next();
+});
+
+
 
 app.use('/api/auth',authRoutes);
 

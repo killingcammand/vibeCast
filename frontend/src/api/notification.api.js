@@ -1,0 +1,14 @@
+import axios from "axios";
+
+export const notificationApi = axios.create({
+    baseURL: "http://localhost:8080/api/notifications",
+    // withCredentials: true
+});
+
+notificationApi.interceptors.request.use((req)=>{
+    const token=localStorage.getItem('accessToken');
+    if(token){
+        req.headers['Authorization']=`Bearer ${token}`;
+    }
+    return req;
+});

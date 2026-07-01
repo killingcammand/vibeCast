@@ -22,8 +22,12 @@ export const registerUserController=async (req,res,next)=>{
 };
 export const loginUserController=async (req,res,next)=>{
     try{
+        console.log("BODY:", req.body);
         const {email,password}=req.body;
+         console.log("2. Request body:", email);
         const {user,tokens}=await loginUserService(email,password);
+            console.log("3. Service completed");
+
         console.log('User logged in:', user);
         console.log('tokens in:', tokens);
 
